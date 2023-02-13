@@ -11,9 +11,8 @@ public class Truck extends AbstractVehicle {
     /**
      * Constructor
      */
-    public Truck(final int theX, final int theY, final Direction theDirection,
-                 final int theDeathTime) {
-        super(theX, theY, theDirection, theDeathTime);
+    public Truck(final int theX, final int theY, final Direction theDirection) {
+        super(theX, theY, theDirection, DEATH_TIME);
     }
 
     /**
@@ -27,7 +26,9 @@ public class Truck extends AbstractVehicle {
      */
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        return theTerrain == Terrain.STREET || theTerrain == Terrain.LIGHT || (theTerrain == Terrain.CROSSWALK && theLight != Light.RED);
+        return theTerrain == Terrain.STREET
+                || theTerrain == Terrain.LIGHT
+                || (theTerrain == Terrain.CROSSWALK && theLight != Light.RED);
     }
 
     /**
@@ -55,8 +56,8 @@ public class Truck extends AbstractVehicle {
      *
      * @param theOther The other object.
      */
-    @Override
-    public void collide(Vehicle theOther) {
+    //@Override
+    //ublic void collide(Vehicle theOther) {
         //Do nothing
     }
 
@@ -66,103 +67,85 @@ public class Truck extends AbstractVehicle {
      *
      * @return the number of updates.
      */
-    @Override
-    public int getDeathTime() {
-        return 0;
-    }
-    @Override
+    //@Override
+    //public int getDeathTime() {
+       // return 0;
+    //}
+   // @Override
     /**
      * Returns the file name of the image for this Vehicle object, such as
      * "car.gif".
      *
      * @return the file name.
      */
-    public String getImageFileName() {
-        if (isAlive()) {
-            return "Truck.gif";
-        } else {
-            return "Truck_Dead.gif";
-        }
-    }
+   // public String getImageFileName() {
+        //if (isAlive()) {
+        //    return "Truck.gif";
+        //} else {
+       //     return "Truck_Dead.gif";
+       // }
+   // }
 
     /**
      * Returns this Vehicle object's direction.
      *
      * @return the direction.
      */
-    public Direction getDirection() {
-        return myDirection;
-    }
+
 
     /**
      * Returns this Vehicle object's x-coordinate.
      *
      * @return the x-coordinate.
      */
-    public int getX() {
-        return myX;
-    }
 
     /**
      * Returns this Vehicle object's y-coordinate.
      *
      * @return the y-coordinate.
      */
-    public int getY() {
-        return myY;
-    }
+
 
     /**
      * Returns whether this Vehicle object is alive and should move on the map.
      *
      * @return true if the object is alive, false otherwise.
      */
-    public boolean isAlive() {
-        return true;
-    }
+
 
     /**
      * Called by the UI to notify a dead vehicle that 1 movement round has
      * passed, so that it will become 1 move closer to revival.
      */
-    public void poke() {
+    //public void poke() {
         //Do nothing, cannot be dead;
-    }
+    //}
 
     /**
      * Moves this vehicle back to its original position.
      */
-    public void reset() {
-        myX = initialX;
-        myY = initialY;
-        myDirection = initialDir;
-    }
+
 
     /**
      * Sets this object's facing direction to the given value.
      *
      * @param theDir The new direction.
      */
-    public void setDirection(Direction theDir) {
-        myDirection = theDir;
-    }
+    //public void setDirection(Direction theDir) {
+
 
     /**
      * Sets this object's x-coordinate to the given value.
      *
      * @param theX The new x-coordinate.
      */
-    public void setX(int theX) {
-        myX = theX;
-    }
+
 
     /**
      * Sets this object's y-coordinate to the given value.
      *
      * @param theY The new y-coordinate.
      */
-    public void setY(int theY) {
-        myY = theY;
-    }
 
-}
+
+//}
