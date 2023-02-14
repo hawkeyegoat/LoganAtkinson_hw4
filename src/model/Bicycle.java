@@ -20,7 +20,11 @@ public class Bicycle extends AbstractVehicle {
      */
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        return theTerrain == Terrain.TRAIL || (theTerrain == Terrain.STREET && theLight == Light.GREEN);
+        return theTerrain == Terrain.TRAIL || (theTerrain == Terrain.STREET)
+                //&& theLight == Light.GREEN)
+                || (theTerrain == Terrain.CROSSWALK)
+                || (theTerrain == Terrain.LIGHT && theLight == Light.GREEN);
+                //&& theLight == Light.GREEN);
     }
 
     /**
@@ -32,12 +36,34 @@ public class Bicycle extends AbstractVehicle {
      */
     @Override
     public Direction chooseDirection(Map<Direction, Terrain> theNeighbors) {
-        return getStraightLeftRightStream().
-                filter(x -> isValidTerrain(theNeighbors.get(x))).
-                sorted(SHUFFLE).findFirst().orElse(getDirection().reverse());
+        if(theNeighbors.get(getDirection()) == Terrain.TRAIL) {
+            return getDirection();
+        }
+        else if (theNeighbors.get(getDirection().left()) == Terrain.TRAIL) {
+            return getDirection().left();
+        }
+        else if (theNeighbors.get(getDirection().right()) == Terrain.TRAIL) {
+            return getDirection().right();
+        }
+
+        else {
+            if(isValidTerrain(theNeighbors.get(getDirection()))) {
+                return getDirection();
+            }
+            else if (isValidTerrain(theNeighbors.get(getDirection().left()))) {
+                return getDirection().left();
+            }
+            else if (isValidTerrain(theNeighbors.get(getDirection().right()))) {
+                return getDirection().right();
+            }
+            else {
+                return getDirection().reverse();
+            }
+            //return getDirection().reverse();
+        }
     }
 
     private boolean isValidTerrain (final Terrain theTerrain) {
-        return theTerrain == Terrain.TRAIL || theTerrain == Terrain.STREET;
+        return theTerrain == Terrain.TRAIL || theTerrain == Terrain.STREET || theTerrain == Terrain.CROSSWALK || theTerrain == Terrain.LIGHT;
     }
 }

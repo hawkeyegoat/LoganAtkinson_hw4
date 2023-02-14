@@ -11,6 +11,8 @@ public abstract class AbstractVehicle implements Vehicle {
 
     protected static final Comparator<Direction> SHUFFLE =
             (theFirst, theSecond) -> RAND.nextInt();
+    protected static final Comparator<Direction> CAR =
+            (theFirst, theSecond) -> RAND.nextInt();
 
     private int myX;
     private int myY;

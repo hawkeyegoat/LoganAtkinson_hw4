@@ -26,7 +26,7 @@ public class Human extends AbstractVehicle {
     @Override
 
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        return (theTerrain == Terrain.STREET && theLight != Light.RED)
+        return (theTerrain == Terrain.GRASS) //&& theLight != Light.RED)
                 || (theTerrain == Terrain.CROSSWALK && theLight != Light.RED);
     }
 
@@ -41,6 +41,7 @@ public class Human extends AbstractVehicle {
         return getStraightLeftRightStream().
                 filter(x -> isValidTerrain(theNeighbors.get(x))).
                 sorted(SHUFFLE).findFirst().orElse(getDirection().reverse());
+
     }
     private boolean isValidTerrain (final Terrain theTerrain) {
         return theTerrain == Terrain.GRASS || theTerrain == Terrain.CROSSWALK;

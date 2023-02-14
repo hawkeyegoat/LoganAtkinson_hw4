@@ -20,15 +20,7 @@ public class Atv extends AbstractVehicle {
      */
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        /*if (theTerrain != Terrain.WALL) {
-            return true;
-        }
-        else {
-            return false;
-        }
-
-         */
-        return theTerrain == Terrain.WALL;
+        return theTerrain != Terrain.WALL;
     }
 
     /**
@@ -45,6 +37,6 @@ public class Atv extends AbstractVehicle {
                 sorted(SHUFFLE).findFirst().orElse(getDirection().reverse());
     }
     private boolean isValidTerrain (final Terrain theTerrain) {
-        return theTerrain == Terrain.WALL;
+        return theTerrain != Terrain.WALL;
     }
 }
