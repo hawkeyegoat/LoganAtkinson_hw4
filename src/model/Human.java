@@ -27,7 +27,7 @@ public class Human extends AbstractVehicle {
 
     public boolean canPass(Terrain theTerrain, Light theLight) {
         return (theTerrain == Terrain.GRASS) //&& theLight != Light.RED)
-                || (theTerrain == Terrain.CROSSWALK && theLight != Light.RED);
+                || (theTerrain == Terrain.CROSSWALK && theLight != Light.GREEN);
     }
 
     /**
@@ -38,10 +38,17 @@ public class Human extends AbstractVehicle {
      * @return the direction this object would like to move.
      */
     public Direction chooseDirection(Map<Direction, Terrain> theNeighbors) {
-        return getStraightLeftRightStream().
-                filter(x -> isValidTerrain(theNeighbors.get(x))).
-                sorted(SHUFFLE).findFirst().orElse(getDirection().reverse());
-
+        if (theNeighbors.get(getDirection()) == Terrain.CROSSWALK) {
+            return getDirection();
+        } else if (theNeighbors.get(getDirection().left()) == Terrain.CROSSWALK) {
+            return getDirection().left();
+        } else if (theNeighbors.get(getDirection().right()) == Terrain.CROSSWALK) {
+            return getDirection().right();
+        } else {
+            return getStraightLeftRightStream().
+                    filter(x -> isValidTerrain(theNeighbors.get(x))).
+                    sorted(SHUFFLE).findFirst().orElse(getDirection().reverse());
+        }
     }
     private boolean isValidTerrain (final Terrain theTerrain) {
         return theTerrain == Terrain.GRASS || theTerrain == Terrain.CROSSWALK;

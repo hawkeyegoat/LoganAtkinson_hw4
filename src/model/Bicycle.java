@@ -11,7 +11,7 @@ public class Bicycle extends AbstractVehicle {
 
     /**
      * Returns whether or not this object may move onto the given type of
-     * terrain, when the street lights are the given color.
+     * terrain, when the streetlights are the given color.
      *
      * @param theTerrain The terrain.
      * @param theLight   The light color.
