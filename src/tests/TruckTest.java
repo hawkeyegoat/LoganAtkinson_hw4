@@ -81,7 +81,8 @@ public class TruckTest {
 
                     // humans can pass GRASS under any light condition
                     assertTrue(t.canPass(destinationTerrain, currentLightCondition),
-                            "Truck should be able to pass STREET with light " + currentLightCondition);
+                            "Truck should be able to pass STREET with light "
+                                    + currentLightCondition);
                 } else if (destinationTerrain == Terrain.CROSSWALK) {
                     // Truck can pass CROSSWALK
                     // if the light is YELLOW or GREEN but not RED
@@ -170,42 +171,4 @@ public class TruckTest {
 
         }
     }
-
-
-    /*
-      method for {@link Human#chooseDirection(java.util.Map)}.
-
-    @Test
-    public void testChooseDirectionOnGrassNearCrosswalk() {
-
-        // If a Human is next to a crosswalk it should always choose to face
-        // toward the crosswalk. Except when that would cause the human to reverse
-        // direction. A Human will only reverse direction if no other valid option exits.
-        // So, test all possible conditions.
-
-        final Human human = new Human(0, 0, Direction.NORTH);
-
-        final Map<Direction, Terrain> neighbors = new HashMap<Direction, Terrain>();
-        neighbors.put(Direction.WEST, Terrain.CROSSWALK);
-        neighbors.put(Direction.NORTH, Terrain.GRASS);
-        neighbors.put(Direction.EAST, Terrain.GRASS);
-        neighbors.put(Direction.SOUTH, Terrain.GRASS);
-
-        for (final Direction d : Direction.values()) {
-            human.setDirection(d);
-
-
-            if (d == Direction.EAST) {
-                assertNotEquals(Direction.WEST, human.chooseDirection(neighbors),
-                        "A human near a crosswalk and facing " + d
-                                + " should not reverse direction!");
-
-            } else {
-                assertEquals(Direction.WEST, human.chooseDirection(neighbors),
-                        "A human near a crosswalk and facing " + d
-                                + " chose a wrong direction!");
-            }
-        }
-    }*/
-
 }

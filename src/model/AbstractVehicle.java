@@ -1,3 +1,6 @@
+/*
+ * TCSS 305 - Road Rage
+ */
 package model;
 
 import java.util.Comparator;
@@ -5,104 +8,197 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.stream.Stream;
 
+/**
+ * Abstract class for our vehicle classes.
+ * @author Logan Atkinson
+ * @version 2/17/23
+ */
 public abstract class AbstractVehicle implements Vehicle {
-    //protected
+    /**
+     * Final constant to produce a random value.
+     */
     protected static final Random RAND = new Random();
-
+    /**
+     * Final constant comparator to order in a random order.
+     */
     protected static final Comparator<Direction> SHUFFLE =
             (theFirst, theSecond) -> RAND.nextInt();
-    protected static final Comparator<Direction> CAR =
-            (theFirst, theSecond) -> RAND.nextInt();
-
+    /**
+     * Field to store the X value.
+     */
     private int myX;
+    /**
+     * Field to store the Y value.
+     */
     private int myY;
+    /**
+     * Field to store the direction value.
+     */
     private Direction myDirection;
-    private final int myIntialX;
+    /**
+     * Field to store the initial X value.
+     */
+    private final int myInitialX;
+    /**
+     * Field to store the initial Y value.
+     */
     private final int myInitialY;
-    private Direction myInitialDirection;
+    /**
+     * Field to store the initial direction value.
+     */
+    private final Direction myInitialDir;
+    /**
+     * Field to store how long a vehicle should
+     * stay dead for.
+     */
     private final int myDeathTime;
+    /**
+     * Field to store how long the vehicle has been dead for.
+     */
     private int myPokeCount;
+    /**
+     * Field to store whether the vehicle is dead.
+     */
     private boolean myAlive;
-
+    /**
+     * Constructor.
+     * @param theX The X value to pass our constructor
+     * @param theY The Y value to pass our constructor
+     * @param theDirection The Direction value to pass our constructor
+     * @param theDeathTime How long the vehicle should stay dead for
+     */
     protected AbstractVehicle(final int theX, final int theY, final Direction theDirection,
                            final int theDeathTime) {
-        myIntialX = theX;
+        myInitialX = theX;
         myInitialY = theY;
-        myInitialDirection = theDirection;
+        myInitialDir = theDirection;
         myDeathTime = theDeathTime;
         reset();
     }
+    /**
+     * Resets the given vehicle to its initial state.
+     */
     public final void reset() {
-        myX = myIntialX;
+        myX = myInitialX;
         myY = myInitialY;
-        myDirection = myInitialDirection;
+        myDirection = myInitialDir;
         myPokeCount = 0;
         myAlive = true;
     }
-    public void collide (final Vehicle theOther) {
-        if (isAlive() && theOther.isAlive() && (getDeathTime() > theOther.getDeathTime())) {
+    /**
+     * Says whether the vehicle should die on hitting
+     * another vehicle.
+     */
+    public void collide(final Vehicle theOther) {
+        if (isAlive() && theOther.isAlive() && getDeathTime() > theOther.getDeathTime()) {
             myAlive = false;
-            //myPokeCount = myDeathTime;
         }
     }
-    protected boolean isValidTerrain;
-    public void setDirection(final Direction theDirection) { myDirection = theDirection; }
-
-    public void setX(final int theX) { myX = theX; }
-
-    public void setY(final int theY) { myY = theY; }
-
+    /**
+     * Sets the vehicle's direction.
+     * @param theDirection The new direction.
+     */
+    public void setDirection(final Direction theDirection) {
+        myDirection = theDirection;
+    }
+    /**
+     * Sets the vehicles x-coordinate.
+     * @param theX The new x-coordinate.
+     */
+    public void setX(final int theX) {
+        myX = theX;
+    }
+    /**
+     * Sets the vehicles y-coordinate.
+     * @param theY The new y-coordinate.
+     */
+    public void setY(final int theY) {
+        myY = theY;
+    }
+    /**
+     * Gets the vehicles current x-coordinate.
+     * @return The x value of the vehicle
+     */
     public int getX() {
         return myX;
     }
+    /**
+     * Gets the vehicles current y-coordinate.
+     * @return The y value of the vehicle
+     */
 
     public int getY() {
         return myY;
     }
 
+    /**
+     * Gets the vehicles current direction.
+     * @return The direction value
+     */
     public Direction getDirection() {
         return myDirection;
     }
 
+    /**
+     * Gets whether the vehicle is alive.
+     * @return the myAlive boolean
+     */
     public boolean isAlive() {
         return myAlive;
     }
 
+    /**
+     * Used to get the vehicles image files.
+     * @return the toString value of the images file
+     */
     public String getImageFileName() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName().toLowerCase(Locale.US));
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getClass().getSimpleName().toLowerCase(Locale.US));
         if (!isAlive()) {
-            sb.append("_dead");
+            stringBuilder.append("_dead");
         }
-        sb.append(".gif");
-        return sb.toString();
+        stringBuilder.append(".gif");
+        return stringBuilder.toString();
     }
+
+    /**
+     * The toString builder for out vehicles.
+     * @return the toString
+     */
+    @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         if (isAlive()) {
-            sb.append(getClass().getSimpleName());
+            stringBuilder.append(getClass().getSimpleName());
         } else {
-            sb.append("pokes: ");
-            sb.append(myPokeCount);
+            stringBuilder.append("pokes: ");
+            stringBuilder.append(myPokeCount);
         }
-        return sb.toString();
+        return stringBuilder.toString();
     }
+    /**
+     * Is called each tick to see if a vehicle should revive yet.
+     */
     public void poke() {
         //if(!isAlive()) {
-            myPokeCount++;
-            if (myPokeCount == getDeathTime()) {
-                myDirection = Direction.random();
-                myPokeCount = 0;
-                myAlive = true;
-            }
-       // }
+        myPokeCount++;
+        if (myPokeCount == getDeathTime()) {
+            myDirection = Direction.random();
+            myPokeCount = 0;
+            myAlive = true;
+        }
     }
-    protected boolean isNotReverse(final Direction theDir) {
-        return theDir != getDirection().reverse();
-    }
+    /**
+     * Gets the death time value of our vehicle.
+     * @return myDeathTime
+     */
     public int getDeathTime() {
         return myDeathTime;
     }
+    /**
+     * Gets the direction stream.
+     * @return Direction stream
+     */
     protected Stream<Direction> getStraightLeftRightStream() {
         return Stream.of(getDirection(), getDirection().left(), getDirection().right());
     }
